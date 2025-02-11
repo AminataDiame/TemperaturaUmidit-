@@ -26,7 +26,8 @@ def salva_dati_json(temp, hum, filename="dati_temperatura_umidita.json"):
             existing_data = []  # Se il file non esiste o è vuoto, inizia con una lista vuota
 
         # Aggiungi i nuovi dati (temperatura e umidità) alla lista, insieme al timestamp
-        existing_data.append({"temperatura": temp, "umidita": hum, "timestamp": time.time()})
+        timestamp = time.strftime("%Y-%m-%d %H:%M:%S")  # Data e ora leggibili
+        existing_data.append({"temperatura": temp, "umidita": hum, "timestamp": timestamp})
 
         # Scrivi i dati aggiornati nel file JSON
         with open(filename, "w") as file:
