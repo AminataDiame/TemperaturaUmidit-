@@ -7,11 +7,13 @@ import json  # Importa la libreria per gestire i file JSON
 # Funzione per leggere i dati dalla porta seriale
 def leggi_dati_seriale(ser):
     try:
-        linea = ser.readline().decode('utf-8').strip()  # Leggi e decodifica la linea dalla porta seriale
-        temp, hum, stato_led = map(int, linea.split(';'))  # Dividi la stringa in temperatura e umidità e convertila in interi
-        return temp, hum, stato_led  # Restituisci i valori letti
-    except:
-        return None, None, None  # Se c'è un errore, restituisci None per entrambi i valori
+        if ser.in_waiting > 0:
+            linea = ser.readline().decode('utf-8').strip()  # Leggi e decodifica la linea dalla porta seriale
+            temp, hum, stato_led = map(int, linea.split(';'))  # Dividi la stringa in temperatura e umidità e convertila in interi
+            return temp, hum, stato_led  # Restituisci i valori letti
+    except serial.SerialException as e:
+        print(f"Errore nella comunicazione seriale: {e}")
+
 
 
 # Funzione per salvare i dati di temperatura e umidità nel file JSON
@@ -73,7 +75,7 @@ def genera_grafici():
     ser = serial.Serial('COM3', 9600, timeout=1)
     time.sleep(2)  # Attendi che la connessione venga stabilita
 
-    try:
+    while True:
         while dpg.is_dearpygui_running():
             # Leggi i dati dalla porta seriale
             temp, hum, led = leggi_dati_seriale(ser)
@@ -96,12 +98,12 @@ def genera_grafici():
                 # Aggiorna il grafico della temperatura
                 dpg.set_value(series_temp, [time_values, temperature])
                 if len(temperature) > 10:
-                    dpg.set_axis_limits(x_axis_temp, max(0, len(time_values) - 10), len(time_values))
+                    dpg.set_axis_limits(x_axis_temp, max(0, len(time_values) - 20), len(time_values))
 
                 # Aggiorna il grafico dell'umidità
                 dpg.set_value(series_hum, [time_values, humidity])
                 if len(humidity) > 10:
-                    dpg.set_axis_limits(x_axis_hum, max(0, len(time_values) - 10), len(time_values))
+                    dpg.set_axis_limits(x_axis_hum, max(0, len(time_values) - 20), len(time_values))
 
                 # Salva i dati di temperatura e umidità nel file JSON
                 salva_dati_json(temp, hum)
@@ -111,11 +113,9 @@ def genera_grafici():
 
             # Pausa di 2 secondi tra le letture
             time.sleep(2)
-    except KeyboardInterrupt:
-        print("\nInterrotto dall'utente.")  # Messaggio di interruzione
-    finally:
-        ser.close()  # Chiudi la connessione seriale
-        dpg.destroy_context()  # Distruggi il contesto della GUI
+
+    ser.close()  # Chiudi la connessione seriale
+    dpg.destroy_context()  # Distruggi il contesto della GUI
 
 
 # Se lo script viene eseguito direttamente (non importato come modulo), avvia la funzione genera_grafici
