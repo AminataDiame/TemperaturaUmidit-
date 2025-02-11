@@ -68,6 +68,20 @@ def genera_grafici():
         dpg.set_axis_limits(x_axis_hum, 0, 20)  # Limiti dell'asse X
         series_hum = dpg.add_line_series([], [], label="Umidità", parent=y_axis_hum)  # Serie per l'umidità
 
+    with dpg.window(label="Grafico Numeri", width=1200, height=300, pos=(10, 350), tag="window_3"):
+        plot_num = dpg.add_plot(label="Numeri", height=300, width=1100)
+
+        # Creazione assi
+        x_axis_num = dpg.add_plot_axis(dpg.mvXAxis, label="Posizione", parent=plot_num)
+        y_axis_num = dpg.add_plot_axis(dpg.mvYAxis, label="Valore", parent=plot_num)
+
+        # Imposta i limiti iniziali
+        dpg.set_axis_limits(y_axis_num, -20, 100)
+        dpg.set_axis_limits(x_axis_num, 0, 40)
+
+        # Serie per numeri positivi e negativi
+        series_temp1 = dpg.add_line_series([], [], label="Numeri Positivi", parent=y_axis_num)
+        series_hum1 = dpg.add_line_series([], [], label="Numeri Negativi", parent=y_axis_num)
     # Crea e visualizza
     dpg.create_viewport(title='Grafici Temperatura e Umidità', width=1240, height=420)
     dpg.setup_dearpygui()
@@ -109,6 +123,14 @@ def genera_grafici():
                 dpg.set_value(series_hum, [time_values, humidity])
                 if len(humidity) > 20:
                     dpg.set_axis_limits(x_axis_hum, max(0, len(time_values) - 20), len(time_values))
+
+                # Aggiorno il grafico con entrambi
+                dpg.set_value(series_temp1, [time_values, temperature])
+                dpg.set_value(series_hum1, [time_values, humidity])
+
+                # Modifica i limiti dell'asse X per visualizzare solo gli ultimi 10 numeri negativi
+                if len(temperature) > 40:
+                    dpg.set_axis_limits(x_axis_num, max(0, len(time_values) - 40), len(time_values))
 
                 # Salvo i dati di temperatura e umidità nel file JSON
                 salva_dati_json(temp, hum)
