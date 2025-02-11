@@ -8,10 +8,10 @@ import json  # Importa la libreria per gestire i file JSON
 def leggi_dati_seriale(ser):
     try:
         linea = ser.readline().decode('utf-8').strip()  # Leggi e decodifica la linea dalla porta seriale
-        temp, hum = map(int, linea.split(';'))  # Dividi la stringa in temperatura e umidità e convertila in interi
-        return temp, hum  # Restituisci i valori letti
+        temp, hum, stato_led = map(int, linea.split(';'))  # Dividi la stringa in temperatura e umidità e convertila in interi
+        return temp, hum, stato_led  # Restituisci i valori letti
     except:
-        return None, None  # Se c'è un errore, restituisci None per entrambi i valori
+        return None, None, None  # Se c'è un errore, restituisci None per entrambi i valori
 
 
 # Funzione per salvare i dati di temperatura e umidità nel file JSON
@@ -40,11 +40,13 @@ def salva_dati_json(temp, hum, filename="dati_temperatura_umidita.json"):
 def genera_grafici():
     temperature = []  # Lista per memorizzare i valori di temperatura
     humidity = []  # Lista per memorizzare i valori di umidità
-    time_values = []  # Lista per memorizzare i valori di tempo
+    time_values = [] # Lista per memorizzare i valori di tempo
+    tempo_inizio = time.time()
     dpg.create_context()  # Crea il contesto per la GUI di DearPyGui
 
     # Creazione della finestra per il grafico della temperatura
     with dpg.window(label="Grafico Temperatura", width=600, height=400, pos=(0, 0)):
+        dpg.add_text("Temperatura: --°C", tag="temp_text")
         plot_temp = dpg.add_plot(label="Temperatura", height=300, width=500)  # Grafico per la temperatura
         x_axis_temp = dpg.add_plot_axis(dpg.mvXAxis, label="Tempo", parent=plot_temp)  # Asse X per il tempo
         y_axis_temp = dpg.add_plot_axis(dpg.mvYAxis, label="Temperatura (°C)", parent=plot_temp)  # Asse Y per la temperatura
@@ -54,6 +56,7 @@ def genera_grafici():
 
     # Creazione della finestra per il grafico dell'umidità
     with dpg.window(label="Grafico Umidità", width=600, height=400, pos=(620, 0)):
+        dpg.add_text("Umidità: --%", tag="hum_text")
         plot_hum = dpg.add_plot(label="Umidità", height=300, width=500)  # Grafico per l'umidità
         x_axis_hum = dpg.add_plot_axis(dpg.mvXAxis, label="Tempo", parent=plot_hum)  # Asse X per il tempo
         y_axis_hum = dpg.add_plot_axis(dpg.mvYAxis, label="Umidità (%)", parent=plot_hum)  # Asse Y per l'umidità
@@ -73,10 +76,20 @@ def genera_grafici():
     try:
         while dpg.is_dearpygui_running():
             # Leggi i dati dalla porta seriale
-            temp, hum = leggi_dati_seriale(ser)
-            if temp is not None and hum is not None:
+            temp, hum, led = leggi_dati_seriale(ser)
+            if temp is not None and hum is not None and led is not None:
+                # Modifico lo stato del led
+                if led == 2:
+                    dpg.set_value("led_text", "LED: ROSSO (Alta temperatura)")
+                elif led == 1:
+                    dpg.set_value("led_text", "LED: VERDE (Normale)")
+                else:
+                    dpg.set_value("led_text", "LED: SPENTO (Bassa temperatura)")
+
+                tempo_corrente = time.time() - tempo_inizio
+
                 # Aggiungi il tempo e i dati alla lista
-                time_values.append(len(time_values))
+                time_values.append(tempo_corrente)
                 temperature.append(temp)
                 humidity.append(hum)
 
