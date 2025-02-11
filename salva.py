@@ -75,7 +75,7 @@ def genera_grafici():
     ser = serial.Serial('COM3', 9600, timeout=1)
     time.sleep(2)  # Attendi che la connessione venga stabilita
 
-    while True:
+    try:
         while dpg.is_dearpygui_running():
             # Leggi i dati dalla porta seriale
             temp, hum, led = leggi_dati_seriale(ser)
@@ -113,9 +113,11 @@ def genera_grafici():
 
             # Pausa di 2 secondi tra le letture
             time.sleep(2)
-
-    ser.close()  # Chiudi la connessione seriale
-    dpg.destroy_context()  # Distruggi il contesto della GUI
+    except KeyboardInterrupt:
+        print("\nInterrotto dall'utente.")  # Messaggio di interruzione
+    finally:
+        ser.close()  # Chiudi la connessione seriale
+        dpg.destroy_context()  # Distruggi il contesto della GUI
 
 
 # Se lo script viene eseguito direttamente (non importato come modulo), avvia la funzione genera_grafici
