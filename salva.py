@@ -11,9 +11,8 @@ def leggi_dati_seriale(ser):
             linea = ser.readline().decode('utf-8').strip()  # Leggi e decodifica la linea dalla porta seriale
             temp, hum, stato_led = map(int, linea.split(';'))  # Dividi la stringa in temperatura e umidità e convertila in interi
             return temp, hum, stato_led  # Restituisci i valori letti
-    except serial.SerialException as e:
-        print(f"Errore nella comunicazione seriale: {e}")
-
+    except serial.SerialException :
+        return  None, None, None
 
 
 # Funzione per salvare i dati di temperatura e umidità nel file JSON
@@ -48,6 +47,7 @@ def genera_grafici():
 
     # Creazione della finestra per il grafico della temperatura
     with dpg.window(label="Grafico Temperatura", width=600, height=400, pos=(0, 0)):
+        dpg.add_text("LED: SPENTO", tag="led_text")
         dpg.add_text("Temperatura: --°C", tag="temp_text")
         plot_temp = dpg.add_plot(label="Temperatura", height=300, width=500)  # Grafico per la temperatura
         x_axis_temp = dpg.add_plot_axis(dpg.mvXAxis, label="Tempo", parent=plot_temp)  # Asse X per il tempo
@@ -58,6 +58,7 @@ def genera_grafici():
 
     # Creazione della finestra per il grafico dell'umidità
     with dpg.window(label="Grafico Umidità", width=600, height=400, pos=(620, 0)):
+        dpg.add_text("LED: SPENTO", tag="led_text")
         dpg.add_text("Umidità: --%", tag="hum_text")
         plot_hum = dpg.add_plot(label="Umidità", height=300, width=500)  # Grafico per l'umidità
         x_axis_hum = dpg.add_plot_axis(dpg.mvXAxis, label="Tempo", parent=plot_hum)  # Asse X per il tempo
@@ -66,7 +67,7 @@ def genera_grafici():
         dpg.set_axis_limits(x_axis_hum, 0, 10)  # Limiti dell'asse X
         series_hum = dpg.add_line_series([], [], label="Umidità", parent=y_axis_hum)  # Serie per l'umidità
 
-    # Crea e visualizza il viewport (finestra dell'app)
+    # Crea e visualizza
     dpg.create_viewport(title='Grafici Temperatura e Umidità', width=1240, height=420)
     dpg.setup_dearpygui()
     dpg.show_viewport()
@@ -80,6 +81,8 @@ def genera_grafici():
             # Leggi i dati dalla porta seriale
             temp, hum, led = leggi_dati_seriale(ser)
             if temp is not None and hum is not None and led is not None:
+                dpg.set_value("temp_text", f"Temperatura: {temp}°C")
+                dpg.set_value("hum_text", f"Umidità: {hum}%")
                 # Modifico lo stato del led
                 if led == 2:
                     dpg.set_value("led_text", "LED: ROSSO (Alta temperatura)")
@@ -90,25 +93,26 @@ def genera_grafici():
 
                 tempo_corrente = time.time() - tempo_inizio
 
-                # Aggiungi il tempo e i dati alla lista
+                # Aggiungo il tempo e i dati alla lista
                 time_values.append(tempo_corrente)
                 temperature.append(temp)
                 humidity.append(hum)
 
-                # Aggiorna il grafico della temperatura
+                # Aggiorno il grafico della temperatura
+
                 dpg.set_value(series_temp, [time_values, temperature])
                 if len(temperature) > 10:
                     dpg.set_axis_limits(x_axis_temp, max(0, len(time_values) - 20), len(time_values))
 
-                # Aggiorna il grafico dell'umidità
+                # Aggiorno il grafico dell'umidità
                 dpg.set_value(series_hum, [time_values, humidity])
                 if len(humidity) > 10:
                     dpg.set_axis_limits(x_axis_hum, max(0, len(time_values) - 20), len(time_values))
 
-                # Salva i dati di temperatura e umidità nel file JSON
+                # Salvo i dati di temperatura e umidità nel file JSON
                 salva_dati_json(temp, hum)
 
-            # Renderizza il frame della GUI
+            # Ridisegna
             dpg.render_dearpygui_frame()
 
             # Pausa di 2 secondi tra le letture
@@ -116,10 +120,9 @@ def genera_grafici():
     except KeyboardInterrupt:
         print("\nInterrotto dall'utente.")  # Messaggio di interruzione
     finally:
-        ser.close()  # Chiudi la connessione seriale
-        dpg.destroy_context()  # Distruggi il contesto della GUI
+        ser.close()  # Chiudo la connessione seriale
+        dpg.destroy_context()  # Distruggo il contesto della GUI
 
 
-# Se lo script viene eseguito direttamente (non importato come modulo), avvia la funzione genera_grafici
 if __name__ == "__main__":
     genera_grafici()
