@@ -30,7 +30,7 @@ def salva_dati_json(temp, hum, filename="dati_temperatura_umidita.json"):
 
         # Scrivi i dati aggiornati nel file JSON
         with open(filename, "w") as file:
-            json.dump(existing_data, file, indent=4)  # Usa indent per formattare il JSON
+            json.dump(existing_data, file, indent=4)
 
         print(f"Dati salvati: Temperatura={temp}°C, Umidità={hum}%")
     except Exception as e:
@@ -52,8 +52,8 @@ def genera_grafici():
         plot_temp = dpg.add_plot(label="Temperatura", height=300, width=500)  # Grafico per la temperatura
         x_axis_temp = dpg.add_plot_axis(dpg.mvXAxis, label="Tempo", parent=plot_temp)  # Asse X per il tempo
         y_axis_temp = dpg.add_plot_axis(dpg.mvYAxis, label="Temperatura (°C)", parent=plot_temp)  # Asse Y per la temperatura
-        dpg.set_axis_limits(y_axis_temp, 0, 50)  # Limiti dell'asse Y
-        dpg.set_axis_limits(x_axis_temp, 0, 10)  # Limiti dell'asse X
+        dpg.set_axis_limits(y_axis_temp, -20, 50)  # Limiti dell'asse Y
+        dpg.set_axis_limits(x_axis_temp, 0, 20)  # Limiti dell'asse X
         series_temp = dpg.add_line_series([], [], label="Temperatura", parent=y_axis_temp)  # Serie per la temperatura
 
     # Creazione della finestra per il grafico dell'umidità
@@ -64,7 +64,7 @@ def genera_grafici():
         x_axis_hum = dpg.add_plot_axis(dpg.mvXAxis, label="Tempo", parent=plot_hum)  # Asse X per il tempo
         y_axis_hum = dpg.add_plot_axis(dpg.mvYAxis, label="Umidità (%)", parent=plot_hum)  # Asse Y per l'umidità
         dpg.set_axis_limits(y_axis_hum, 0, 100)  # Limiti dell'asse Y
-        dpg.set_axis_limits(x_axis_hum, 0, 10)  # Limiti dell'asse X
+        dpg.set_axis_limits(x_axis_hum, 0, 20)  # Limiti dell'asse X
         series_hum = dpg.add_line_series([], [], label="Umidità", parent=y_axis_hum)  # Serie per l'umidità
 
     # Crea e visualizza
@@ -101,12 +101,12 @@ def genera_grafici():
                 # Aggiorno il grafico della temperatura
 
                 dpg.set_value(series_temp, [time_values, temperature])
-                if len(temperature) > 10:
+                if len(temperature) > 20:
                     dpg.set_axis_limits(x_axis_temp, max(0, len(time_values) - 20), len(time_values))
 
                 # Aggiorno il grafico dell'umidità
                 dpg.set_value(series_hum, [time_values, humidity])
-                if len(humidity) > 10:
+                if len(humidity) > 20:
                     dpg.set_axis_limits(x_axis_hum, max(0, len(time_values) - 20), len(time_values))
 
                 # Salvo i dati di temperatura e umidità nel file JSON
