@@ -97,7 +97,7 @@ def genera_grafici():
 
 
     ser = serial.Serial('COM6', 9600, timeout=1)
-    time.sleep(2)  # Attendi che la connessione venga stabilita
+    time.sleep(1)  # Attendi che la connessione venga stabilita
 
     try:
         while dpg.is_dearpygui_running():
@@ -132,12 +132,12 @@ def genera_grafici():
 
                     dpg.set_value(series_temp, [time_values, temperature])
                     if tempo_corrente > 15:
-                        dpg.set_axis_limits(x_axis_temp, max(0, len(time_values) - 10), len(time_values))
+                        dpg.set_axis_limits(x_axis_temp, max(0, len(time_values) - 15), len(time_values))
 
                     # Aggiorno il grafico dell'umidità
                     dpg.set_value(series_hum, [time_values, humidity])
                     if tempo_corrente > 15:
-                        dpg.set_axis_limits(x_axis_hum, max(0, len(time_values) - 10), len(time_values))
+                        dpg.set_axis_limits(x_axis_hum, max(0, len(time_values) - 15), len(time_values))
 
                     # Aggiorno il grafico con entrambi
                     dpg.set_value(series_temp1, [time_values, temperature])
@@ -145,7 +145,7 @@ def genera_grafici():
 
                     # Modifica i limiti dell'asse X per visualizzare solo gli ultimi 10 numeri negativi
                     if tempo_corrente > 30:
-                        dpg.set_axis_limits(x_axis_num, max(0, len(time_values) - 20), len(time_values))
+                        dpg.set_axis_limits(x_axis_num, max(0, len(time_values) - 30), len(time_values))
 
                     # Salvo i dati di temperatura e umidità nel file JSON
                     salva_dati_json(temp, hum)
