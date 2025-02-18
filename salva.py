@@ -70,8 +70,8 @@ def genera_grafici():
         dpg.set_axis_limits(x_axis_hum, 0, 15)  # Limiti dell'asse X
         series_hum = dpg.add_line_series([], [], label="Umidità", parent=y_axis_hum)  # Serie per l'umidità
 
-    with dpg.window(label="Grafico Numeri", width=1200, height=300, pos=(10, 350), tag="window_3"):
-        plot_num = dpg.add_plot(label="Numeri", height=300, width=1100)
+    with dpg.window(label="Grafico Umidità e Temperatura", width=1200, height=300, pos=(10, 350), tag="window_3"):
+        plot_num = dpg.add_plot(label="Umidità e Temperatura", height=300, width=1100)
 
         # Creazione assi
         x_axis_num = dpg.add_plot_axis(dpg.mvXAxis, label="Posizione", parent=plot_num)
