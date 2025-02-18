@@ -49,24 +49,26 @@ def genera_grafici():
 
     # Creazione della finestra per il grafico della temperatura
     with dpg.window(label="Grafico Temperatura", width=600, height=300, pos=(0, 0)):
-        dpg.add_text("LED: SPENTO", tag="led_text")
+        dpg.add_text("LED: SPENTO", tag="led_text1")
         dpg.add_text("Temperatura: --°C", tag="temp_text")
-        plot_temp = dpg.add_plot(label="Temperatura", height=250, width=500)
-        x_axis_temp = dpg.add_plot_axis(dpg.mvXAxis, label="Tempo", parent=plot_temp)
-        y_axis_temp = dpg.add_plot_axis(dpg.mvYAxis, label="Temperatura (°C)", parent=plot_temp)
-        dpg.set_axis_limits(y_axis_temp, -20, 50)
-        dpg.set_axis_limits(x_axis_temp, 0, 15)
-        series_temp = dpg.add_line_series([], [], label="Temperatura", parent=y_axis_temp)
+        plot_temp = dpg.add_plot(label="Temperatura", height=250, width=500)  # Grafico per la temperatura
+        x_axis_temp = dpg.add_plot_axis(dpg.mvXAxis, label="Tempo", parent=plot_temp)  # Asse X per il tempo
+        y_axis_temp = dpg.add_plot_axis(dpg.mvYAxis, label="Temperatura (°C)",
+                                        parent=plot_temp)  # Asse Y per la temperatura
+        dpg.set_axis_limits(y_axis_temp, -20, 50)  # Limiti dell'asse Y
+        dpg.set_axis_limits(x_axis_temp, 0, 15)  # Limiti dell'asse X
+        series_temp = dpg.add_line_series([], [], label="Temperatura", parent=y_axis_temp)  # Serie per la temperatura
 
     # Creazione della finestra per il grafico dell'umidità
     with dpg.window(label="Grafico Umidità", width=600, height=300, pos=(620, 0)):
+        dpg.add_text("LED: SPENTO", tag="led_text2")
         dpg.add_text("Umidità: --%", tag="hum_text")
-        plot_hum = dpg.add_plot(label="Umidità", height=250, width=500)
-        x_axis_hum = dpg.add_plot_axis(dpg.mvXAxis, label="Tempo", parent=plot_hum)
-        y_axis_hum = dpg.add_plot_axis(dpg.mvYAxis, label="Umidità (%)", parent=plot_hum)
-        dpg.set_axis_limits(y_axis_hum, 0, 100)
-        dpg.set_axis_limits(x_axis_hum, 0, 15)
-        series_hum = dpg.add_line_series([], [], label="Umidità", parent=y_axis_hum)
+        plot_hum = dpg.add_plot(label="Umidità", height=250, width=500)  # Grafico per l'umidità
+        x_axis_hum = dpg.add_plot_axis(dpg.mvXAxis, label="Tempo", parent=plot_hum)  # Asse X per il tempo
+        y_axis_hum = dpg.add_plot_axis(dpg.mvYAxis, label="Umidità (%)", parent=plot_hum)  # Asse Y per l'umidità
+        dpg.set_axis_limits(y_axis_hum, 0, 100)  # Limiti dell'asse Y
+        dpg.set_axis_limits(x_axis_hum, 0, 15)  # Limiti dell'asse X
+        series_hum = dpg.add_line_series([], [], label="Umidità", parent=y_axis_hum)  # Serie per l'umidità
 
     with dpg.window(label="Grafico Numeri", width=1200, height=300, pos=(10, 350), tag="window_3"):
         plot_num = dpg.add_plot(label="Numeri", height=300, width=1100)
