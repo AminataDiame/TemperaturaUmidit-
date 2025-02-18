@@ -1,139 +1,153 @@
-import queue  # Importo la libreria per gestire le code (utile per il thread)
-import threading  # Questa serve per gestire i thread (processi paralleli)
-import serial  # Libreria per comunicare con la porta seriale (Arduino)
-import time  # Per gestire i tempi e le attese
-import dearpygui.dearpygui as dpg  # Libreria per creare l’interfaccia grafica
-import json  # Per salvare i dati in un file JSON
+import serial  # Libreria per la comunicazione seriale
+import time  # Libreria per la gestione del tempo
+import dearpygui.dearpygui as dpg  # Libreria per l'interfaccia grafica
+import json  # Libreria per la gestione dei file JSON
+import threading  # Libreria per la gestione dei thread
+import queue  # Libreria per gestire la comunicazione tra thread
 
 # Coda per passare i dati dal thread della seriale alla GUI
 data_queue = queue.Queue()
-
-# Variabile globale per fermare il thread quando chiudiamo il programma
-running = True
+running = True  # Variabile per gestire l'esecuzione del thread
 
 
-# 🔹 Funzione che legge i dati dalla porta seriale in un thread separato
 def leggi_dati_seriale(ser):
-    global running  # Dico che voglio usare la variabile globale "running"
+    # Thread che legge i dati dalla porta seriale e li mette nella coda
+    global running
     while running:
-        try:
-            if ser.in_waiting > 0:  # Se ci sono dati disponibili sulla seriale...
-                linea = ser.readline().decode('utf-8').strip()  # Leggo la linea e la converto in stringa
-                dati = linea.split(';')  # Divido i dati ricevuti separati da ";"
-                if len(dati) == 3:  # Controllo che ci siano esattamente 3 valori
-                    temp, hum, stato_led = map(int, dati)  # Converto i dati in numeri interi
-                    data_queue.put((temp, hum, stato_led))  # Metto i dati nella coda per la GUI
-        except serial.SerialException:
-            pass  # Se c'è un errore nella lettura della seriale vado avanti
-        time.sleep(2)  # Aspetto 2 secondi
+        if ser.in_waiting > 0:
+            try:
+                linea = ser.readline().decode('utf-8').strip()
+                dati = linea.split(';')
+                dati_interi = [int(x) for x in dati]
+                data_queue.put(dati_interi)  # Inserisce i dati nella coda
+            except Exception as e:
+                print(f"Errore lettura seriale: {e}")
+        time.sleep(1)  # Attende 1 secondo tra le letture
 
 
-# 🔹 Funzione per salvare i dati in un file JSON
 def salva_dati_json(temp, hum, filename="dati_temperatura_umidita.json"):
     try:
-        with open(filename, "r") as file:  # Provo ad aprire il file JSON
-            existing_data = json.load(file)  # Carico i dati esistenti
+        with open(filename, "r") as file:
+            existing_data = json.load(file)
     except (FileNotFoundError, json.JSONDecodeError):
-        existing_data = []  # Se il file non esiste, creo una lista vuota
+        existing_data = []
 
-    # Prendo la data e l'ora attuale per il salvataggio
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
     existing_data.append({"temperatura": temp, "umidita": hum, "timestamp": timestamp})
 
-    # Scrivo i nuovi dati nel file JSON
     with open(filename, "w") as file:
         json.dump(existing_data, file, indent=4)
 
 
-# 🔹 Funzione per creare l'interfaccia grafica
 def genera_grafici():
-    global running  # Mi assicuro di usare la variabile globale
+    global running
 
-    # Liste per memorizzare i valori nel tempo
-    temperature = []
-    humidity = []
-    time_values = []
-    tempo_inizio = time.time()  # Memorizzo il tempo di inizio per il grafico
+    temperature, humidity, time_values = [], [], []
+    tempo_inizio = time.time()
 
-    dpg.create_context()  # Inizializzo la GUI
+    dpg.create_context()
 
-    # 🔹 Finestra per il grafico della temperatura
-    with dpg.window(label="Grafico Temperatura", width=600, height=400, pos=(0, 0)):
-        dpg.add_text("LED: SPENTO", tag="led_text")  # Testo per indicare lo stato del LED
-        dpg.add_text("Temperatura: --°C", tag="temp_text")  # Testo per la temperatura
-        plot_temp = dpg.add_plot(label="Temperatura", height=300, width=500)
+    # Creazione della finestra per il grafico della temperatura
+    with dpg.window(label="Grafico Temperatura", width=600, height=300, pos=(0, 0)):
+        dpg.add_text("LED: SPENTO", tag="led_text")
+        dpg.add_text("Temperatura: --°C", tag="temp_text")
+        plot_temp = dpg.add_plot(label="Temperatura", height=250, width=500)
         x_axis_temp = dpg.add_plot_axis(dpg.mvXAxis, label="Tempo", parent=plot_temp)
         y_axis_temp = dpg.add_plot_axis(dpg.mvYAxis, label="Temperatura (°C)", parent=plot_temp)
         dpg.set_axis_limits(y_axis_temp, -20, 50)
-        dpg.set_axis_limits(x_axis_temp, 0, 20)
+        dpg.set_axis_limits(x_axis_temp, 0, 15)
         series_temp = dpg.add_line_series([], [], label="Temperatura", parent=y_axis_temp)
 
-    # 🔹 Finestra per il grafico dell'umidità
-    with dpg.window(label="Grafico Umidità", width=600, height=400, pos=(620, 0)):
-        dpg.add_text("Umidità: --%", tag="hum_text")  # Testo per l'umidità
-        plot_hum = dpg.add_plot(label="Umidità", height=300, width=500)
+    # Creazione della finestra per il grafico dell'umidità
+    with dpg.window(label="Grafico Umidità", width=600, height=300, pos=(620, 0)):
+        dpg.add_text("Umidità: --%", tag="hum_text")
+        plot_hum = dpg.add_plot(label="Umidità", height=250, width=500)
         x_axis_hum = dpg.add_plot_axis(dpg.mvXAxis, label="Tempo", parent=plot_hum)
         y_axis_hum = dpg.add_plot_axis(dpg.mvYAxis, label="Umidità (%)", parent=plot_hum)
         dpg.set_axis_limits(y_axis_hum, 0, 100)
-        dpg.set_axis_limits(x_axis_hum, 0, 20)
+        dpg.set_axis_limits(x_axis_hum, 0, 15)
         series_hum = dpg.add_line_series([], [], label="Umidità", parent=y_axis_hum)
 
-    # Imposto la finestra principale
-    dpg.create_viewport(title='Grafici Temperatura e Umidità', width=1240, height=420)
+    with dpg.window(label="Grafico Numeri", width=1200, height=300, pos=(10, 350), tag="window_3"):
+        plot_num = dpg.add_plot(label="Numeri", height=300, width=1100)
+
+        # Creazione assi
+        x_axis_num = dpg.add_plot_axis(dpg.mvXAxis, label="Posizione", parent=plot_num)
+        y_axis_num = dpg.add_plot_axis(dpg.mvYAxis, label="Valore", parent=plot_num)
+
+        # Imposta i limiti iniziali
+        dpg.set_axis_limits(y_axis_num, -20, 100)
+        dpg.set_axis_limits(x_axis_num, 0, 30)
+
+        # Serie per numeri positivi e negativi
+        series_temp1 = dpg.add_line_series([], [], label="Numeri Positivi", parent=y_axis_num)
+        series_hum1 = dpg.add_line_series([], [], label="Numeri Negativi", parent=y_axis_num)
+
+    dpg.create_viewport(title='Grafici Temperatura e Umidità', width=1240, height=720)
     dpg.setup_dearpygui()
     dpg.show_viewport()
 
-    # 🔹 Apro la porta seriale (MODIFICA 'COM3' con la tua porta)
-    ser = serial.Serial('COM3', 9600, timeout=1)
-    time.sleep(2)  # Aspetto un attimo per la connessione
+    ser = serial.Serial('COM6', 9600, timeout=1)
+    time.sleep(2)
 
-    # 🔹 Avvio il thread per leggere i dati dalla seriale
+    # Avvio del thread per la lettura della seriale
     serial_thread = threading.Thread(target=leggi_dati_seriale, args=(ser,))
     serial_thread.start()
 
     try:
-        while dpg.is_dearpygui_running():  # Finché la GUI è aperta...
-            # Controllo se ci sono dati nuovi nella coda
+        while dpg.is_dearpygui_running():
             while not data_queue.empty():
-                temp, hum, led = data_queue.get()  # Prendo i dati dalla coda
+                dati = data_queue.get()
+                if len(dati) == 3:
+                    temp, hum, led = dati
+                    dpg.set_value("temp_text", f"Temperatura: {temp}°C")
+                    dpg.set_value("hum_text", f"Umidità: {hum}%")
 
-                # 🔹 Aggiorno i valori nell'interfaccia
-                dpg.set_value("temp_text", f"Temperatura: {temp}°C")
-                dpg.set_value("hum_text", f"Umidità: {hum}%")
+                    if led == 2:
+                        dpg.set_value("led_text1", "LED: ROSSO (Alta temperatura)")
+                        dpg.set_value("led_text2", "LED: ROSSO (Alta temperatura)")
+                    elif led == 1:
+                        dpg.set_value("led_text1", "LED: VERDE (Normale)")
+                        dpg.set_value("led_text2", "LED: VERDE (Normale)")
+                    else:
+                        dpg.set_value("led_text1", "LED: SPENTO (Bassa temperatura)")
+                        dpg.set_value("led_text2", "LED: SPENTO (Bassa temperatura)")
 
-                # 🔹 Modifico il testo in base allo stato del LED
-                if led == 2:
-                    dpg.set_value("led_text", "LED: ROSSO (Alta temperatura)")
-                elif led == 1:
-                    dpg.set_value("led_text", "LED: VERDE (Normale)")
-                else:
-                    dpg.set_value("led_text", "LED: SPENTO (Bassa temperatura)")
+                    tempo_corrente = time.time() - tempo_inizio
+                    time_values.append(tempo_corrente)
+                    temperature.append(temp)
+                    humidity.append(hum)
 
-                # 🔹 Aggiorno il grafico
-                tempo_corrente = time.time() - tempo_inizio
-                time_values.append(tempo_corrente)
-                temperature.append(temp)
-                humidity.append(hum)
+                    dpg.set_value(series_temp, [time_values, temperature])
+                    if tempo_corrente + 1 > 15:
+                        dpg.set_axis_limits(x_axis_temp, max(0, len(time_values) - 15), tempo_corrente + 1)
 
-                dpg.set_value(series_temp, [time_values, temperature])
-                dpg.set_value(series_hum, [time_values, humidity])
+                    # Aggiorno il grafico dell'umidità
+                    dpg.set_value(series_hum, [time_values, humidity])
+                    if tempo_corrente + 1 > 15:
+                        dpg.set_axis_limits(x_axis_hum, max(0, len(time_values) - 15), tempo_corrente + 1)
 
-                # 🔹 Salvo i dati in JSON
-                salva_dati_json(temp, hum)
+                    # Aggiorno il grafico con entrambi
+                    dpg.set_value(series_temp1, [time_values, temperature])
+                    dpg.set_value(series_hum1, [time_values, humidity])
+
+                    if tempo_corrente + 1 > 30:
+                        dpg.set_axis_limits(x_axis_num, max(0, len(time_values) - 30), tempo_corrente + 1)
+
+                    salva_dati_json(temp, hum)
 
             dpg.render_dearpygui_frame()
-            time.sleep(0.1)  # Aspetto 0.1 secondi per aggiornare
+            time.sleep(0.1)
 
-    except KeyboardInterrupt:  # Se premo Ctrl+C, interrompo tutto
-        print("\nInterrotto dall'utente.")
+    except KeyboardInterrupt:
+        print("Interrotto dall'utente.")
 
     finally:
-        running = False  # Fermo il thread
-        serial_thread.join()  # Aspetto che il thread termini
-        ser.close()  # Chiudo la porta seriale
-        dpg.destroy_context()  # Chiudo la GUI
+        running = False
+        serial_thread.join()
+        ser.close()
+        dpg.destroy_context()
 
 
-# 🔹 Avvio il programma
 if __name__ == "__main__":
     genera_grafici()
