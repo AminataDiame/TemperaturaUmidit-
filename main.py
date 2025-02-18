@@ -131,21 +131,20 @@ def genera_grafici():
                     # Aggiorno il grafico della temperatura
 
                     dpg.set_value(series_temp, [time_values, temperature])
-                    if tempo_corrente > 15:
-                        dpg.set_axis_limits(x_axis_temp, max(0, len(time_values) - 15), len(time_values))
+                    if tempo_corrente+1 > 15:
+                        dpg.set_axis_limits(x_axis_temp, max(0, len(time_values) - 15), tempo_corrente)
 
                     # Aggiorno il grafico dell'umidità
                     dpg.set_value(series_hum, [time_values, humidity])
-                    if tempo_corrente > 15:
-                        dpg.set_axis_limits(x_axis_hum, max(0, len(time_values) - 15), len(time_values))
+                    if tempo_corrente+1 > 15:
+                        dpg.set_axis_limits(x_axis_hum, max(0, len(time_values) - 15), tempo_corrente)
 
                     # Aggiorno il grafico con entrambi
                     dpg.set_value(series_temp1, [time_values, temperature])
                     dpg.set_value(series_hum1, [time_values, humidity])
 
-                    # Modifica i limiti dell'asse X per visualizzare solo gli ultimi 10 numeri negativi
-                    if tempo_corrente > 30:
-                        dpg.set_axis_limits(x_axis_num, max(0, len(time_values) - 30), len(time_values))
+                    if tempo_corrente+1 > 30:
+                        dpg.set_axis_limits(x_axis_num, max(0, len(time_values) - 30), tempo_corrente)
 
                     # Salvo i dati di temperatura e umidità nel file JSON
                     salva_dati_json(temp, hum)
