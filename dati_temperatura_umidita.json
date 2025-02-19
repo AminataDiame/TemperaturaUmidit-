@@ -1733,5 +1733,545 @@
         "temperatura": 20,
         "umidita": 16,
         "timestamp": "2025-02-12 13:44:56"
+    },
+    {
+        "temperatura": 40,
+        "umidita": 75,
+        "timestamp": "2025-02-19 12:25:50"
+    },
+    {
+        "temperatura": 49,
+        "umidita": 98,
+        "timestamp": "2025-02-19 12:25:51"
+    },
+    {
+        "temperatura": 37,
+        "umidita": 71,
+        "timestamp": "2025-02-19 12:25:52"
+    },
+    {
+        "temperatura": 5,
+        "umidita": 43,
+        "timestamp": "2025-02-19 12:25:53"
+    },
+    {
+        "temperatura": 42,
+        "umidita": 100,
+        "timestamp": "2025-02-19 12:25:54"
+    },
+    {
+        "temperatura": 42,
+        "umidita": 77,
+        "timestamp": "2025-02-19 12:25:55"
+    },
+    {
+        "temperatura": 17,
+        "umidita": 92,
+        "timestamp": "2025-02-19 12:25:56"
+    },
+    {
+        "temperatura": 4,
+        "umidita": 44,
+        "timestamp": "2025-02-19 12:25:57"
+    },
+    {
+        "temperatura": 39,
+        "umidita": 37,
+        "timestamp": "2025-02-19 12:25:58"
+    },
+    {
+        "temperatura": 24,
+        "umidita": 33,
+        "timestamp": "2025-02-19 12:25:59"
+    },
+    {
+        "temperatura": 5,
+        "umidita": 29,
+        "timestamp": "2025-02-19 12:26:00"
+    },
+    {
+        "temperatura": 48,
+        "umidita": 75,
+        "timestamp": "2025-02-19 12:26:01"
+    },
+    {
+        "temperatura": 13,
+        "umidita": 65,
+        "timestamp": "2025-02-19 12:26:02"
+    },
+    {
+        "temperatura": 8,
+        "umidita": 5,
+        "timestamp": "2025-02-19 12:26:03"
+    },
+    {
+        "temperatura": 32,
+        "umidita": 81,
+        "timestamp": "2025-02-19 12:26:04"
+    },
+    {
+        "temperatura": 34,
+        "umidita": 3,
+        "timestamp": "2025-02-19 12:26:05"
+    },
+    {
+        "temperatura": 7,
+        "umidita": 89,
+        "timestamp": "2025-02-19 12:26:06"
+    },
+    {
+        "temperatura": 49,
+        "umidita": 89,
+        "timestamp": "2025-02-19 12:26:07"
+    },
+    {
+        "temperatura": 18,
+        "umidita": 18,
+        "timestamp": "2025-02-19 12:26:08"
+    },
+    {
+        "temperatura": 9,
+        "umidita": 82,
+        "timestamp": "2025-02-19 12:26:09"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 49,
+        "timestamp": "2025-02-19 12:40:28"
+    },
+    {
+        "temperatura": 29,
+        "umidita": 24,
+        "timestamp": "2025-02-19 12:40:29"
+    },
+    {
+        "temperatura": 29,
+        "umidita": 60,
+        "timestamp": "2025-02-19 12:40:30"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 12,
+        "timestamp": "2025-02-19 12:40:31"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 77,
+        "timestamp": "2025-02-19 12:40:32"
+    },
+    {
+        "temperatura": 29,
+        "umidita": 29,
+        "timestamp": "2025-02-19 12:40:33"
+    },
+    {
+        "temperatura": 30,
+        "umidita": 100,
+        "timestamp": "2025-02-19 12:40:34"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 96,
+        "timestamp": "2025-02-19 12:40:35"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 89,
+        "timestamp": "2025-02-19 12:40:36"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 23,
+        "timestamp": "2025-02-19 12:40:37"
+    },
+    {
+        "temperatura": 29,
+        "umidita": 43,
+        "timestamp": "2025-02-19 12:40:38"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 62,
+        "timestamp": "2025-02-19 12:40:39"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 65,
+        "timestamp": "2025-02-19 12:40:40"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 39,
+        "timestamp": "2025-02-19 12:41:43"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:41:44"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:41:45"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:41:48"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:41:48"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:41:48"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:41:49"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 39,
+        "timestamp": "2025-02-19 12:41:50"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 39,
+        "timestamp": "2025-02-19 12:42:14"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:42:15"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 39,
+        "timestamp": "2025-02-19 12:42:18"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:42:18"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:42:18"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:42:19"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:42:20"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:42:21"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:42:22"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:42:23"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:42:24"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:42:25"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:42:26"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:42:27"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:42:28"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 39,
+        "timestamp": "2025-02-19 12:42:29"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 39,
+        "timestamp": "2025-02-19 12:42:30"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:42:31"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 39,
+        "timestamp": "2025-02-19 12:42:32"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:42:33"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 39,
+        "timestamp": "2025-02-19 12:42:34"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:42:35"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:42:36"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:42:37"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 39,
+        "timestamp": "2025-02-19 12:42:38"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:42:39"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:42:40"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:42:41"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:42:42"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 39,
+        "timestamp": "2025-02-19 12:42:43"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:42:44"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:42:45"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 38,
+        "timestamp": "2025-02-19 12:59:30"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 39,
+        "timestamp": "2025-02-19 12:59:31"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:59:32"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:59:33"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 39,
+        "timestamp": "2025-02-19 12:59:34"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:59:35"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 39,
+        "timestamp": "2025-02-19 12:59:36"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 39,
+        "timestamp": "2025-02-19 12:59:37"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 40,
+        "timestamp": "2025-02-19 12:59:38"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 38,
+        "timestamp": "2025-02-19 13:07:27"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 38,
+        "timestamp": "2025-02-19 13:07:28"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 39,
+        "timestamp": "2025-02-19 13:07:29"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 40,
+        "timestamp": "2025-02-19 13:07:30"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 39,
+        "timestamp": "2025-02-19 13:32:03"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 38,
+        "timestamp": "2025-02-19 13:32:04"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 40,
+        "timestamp": "2025-02-19 13:32:05"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 40,
+        "timestamp": "2025-02-19 13:32:06"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 38,
+        "timestamp": "2025-02-19 13:32:07"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 39,
+        "timestamp": "2025-02-19 13:32:08"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 40,
+        "timestamp": "2025-02-19 13:32:09"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 38,
+        "timestamp": "2025-02-19 13:32:10"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 40,
+        "timestamp": "2025-02-19 13:32:11"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 38,
+        "timestamp": "2025-02-19 13:32:12"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 40,
+        "timestamp": "2025-02-19 13:32:13"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 38,
+        "timestamp": "2025-02-19 13:32:14"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 38,
+        "timestamp": "2025-02-19 13:32:15"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 40,
+        "timestamp": "2025-02-19 13:32:16"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 39,
+        "timestamp": "2025-02-19 13:32:17"
+    },
+    {
+        "temperatura": 27,
+        "umidita": 40,
+        "timestamp": "2025-02-19 13:32:18"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 40,
+        "timestamp": "2025-02-19 13:32:19"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 38,
+        "timestamp": "2025-02-19 13:32:20"
+    },
+    {
+        "temperatura": 28,
+        "umidita": 39,
+        "timestamp": "2025-02-19 13:32:21"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 40,
+        "timestamp": "2025-02-19 13:32:22"
+    },
+    {
+        "temperatura": 26,
+        "umidita": 39,
+        "timestamp": "2025-02-19 13:32:23"
+    },
+    {
+        "temperatura": 25,
+        "umidita": 38,
+        "timestamp": "2025-02-19 13:32:24"
     }
 ]

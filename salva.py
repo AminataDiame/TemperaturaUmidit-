@@ -1,3 +1,4 @@
+import random
 import serial  # Libreria per la comunicazione seriale
 import time  # Libreria per la gestione del tempo
 import dearpygui.dearpygui as dpg  # Libreria per l'interfaccia grafica
@@ -5,9 +6,23 @@ import json  # Libreria per la gestione dei file JSON
 import threading  # Libreria per la gestione dei thread
 import queue  # Libreria per gestire la comunicazione tra thread
 
+from dearpygui.dearpygui import draw_circle
+
 # Coda per passare i dati dal thread della seriale alla GUI
 data_queue = queue.Queue()
 running = True  # Variabile per gestire l'esecuzione del thread
+
+def genera_numeri():
+   global running
+   while running:
+       temp = random.randint(25,28)
+       hum = random.randint(38, 40)
+       dati=[temp,hum,1]
+       # Invia i numeri alla coda per la GUI
+       data_queue.put(dati)
+       time.sleep(1)
+
+
 
 
 def leggi_dati_seriale(ser):
@@ -89,11 +104,11 @@ def genera_grafici():
     dpg.setup_dearpygui()
     dpg.show_viewport()
 
-    ser = serial.Serial('COM6', 9600, timeout=1)
-    time.sleep(2)
+    #ser = serial.Serial('COM6', 9600, timeout=1)
+    #time.sleep(2)
 
     # Avvio del thread per la lettura della seriale
-    serial_thread = threading.Thread(target=leggi_dati_seriale, args=(ser,))
+    serial_thread = threading.Thread(target=genera_numeri)
     serial_thread.start()
 
     try:
@@ -147,7 +162,7 @@ def genera_grafici():
     finally:
         running = False
         serial_thread.join()
-        ser.close()
+        #ser.close()
         dpg.destroy_context()
 
 
